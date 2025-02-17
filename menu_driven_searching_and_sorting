@@ -1,0 +1,278 @@
+#include <stdio.h>
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[1;34m"
+#define RESET "\033[0m"
+
+void hat()
+{
+    int i, j, n, x, insert, arr[100], ele, flag = 0, beg = 0, mid, end, loc = -1, temp, del, min;
+    do
+    {
+        printf(YELLOW "\n > Choose Your Action!!\n" RESET);
+        printf(BLUE " [1] searching the elements from the array\n" RESET);
+        printf(BLUE " [2] sorting the elements in the array\n" RESET);
+        printf(" Select your move (1 or 2): ");
+        scanf("%d", &x);
+        if (x == 1)
+        {
+            printf("\nYou have chosen to insert a new element in the array.\n");
+            printf(GREEN " [1] Linear search.\n" RESET);
+            printf(GREEN " [2] Binary search.\n" RESET);
+            printf(" Select your operation >> ");
+            scanf("%d", &insert);
+            switch (insert)
+            {
+            case 1:
+                printf("\nLinear search:-\n");
+                printf("Enter the size of the array :");
+                scanf("%d", &n);
+                printf("Enter the elements of the array :\n");
+                for (i = 0; i < n; i++)
+                {
+                    scanf("%d", &arr[i]);
+                }
+                printf("Enter the element to be searched :");
+                scanf("%d", &ele);
+                for (i = 0; i < n; i++)
+                {
+                    if (arr[i] == ele)
+                    {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 1)
+                {
+                    printf(GREEN "Element %d found at location %d\n", ele, i + 1, RESET);
+                }
+                else
+                {
+                    printf(RED "Element %d not found in the array\n", ele, RESET);
+                }
+
+                break;
+            case 2:
+                printf("\nBinary search:-\n");
+                printf("Enter the size of the array: ");
+                scanf("%d", &n);
+                printf("Enter the elements of the array in sorted order:\n");
+                for (i = 0; i < n; i++)
+                {
+                    scanf("%d", &arr[i]);
+                }
+
+                printf("Enter the element to be searched: ");
+                scanf("%d", &ele);
+
+                beg = 0;
+                end = n - 1;
+                loc = -1; // Reset location before searching
+
+                while (beg <= end)
+                {
+                    mid = beg + (end - beg) / 2; // Prevents integer overflow
+
+                    if (arr[mid] == ele)
+                    {
+                        loc = mid;
+                        break;
+                    }
+                    else if (arr[mid] > ele)
+                    {
+                        end = mid - 1;
+                    }
+                    else
+                    {
+                        beg = mid + 1;
+                    }
+                }
+
+                if (loc != -1)
+                {
+                    printf(GREEN "Element %d found at index %d (1-based: %d)\n", ele, loc, loc + 1, RESET);
+                }
+                else
+                {
+                    printf(RED "Element %d not found in the array\n", ele, RESET);
+                }
+                break;
+
+            default:
+                printf(RED "Invalid choice.\n" RESET);
+                break;
+            }
+        }
+        else if (x == 2)
+        {
+            printf("1]Bubble sort.\n");
+            printf("2]Selection sort.\n");
+            printf("3]Insertion sort.\n");
+            printf(" Select your operation >> ");
+            scanf("%d", &del);
+            switch (del)
+            {
+            case 1:
+                printf(YELLOW "Bubble sort:-\n" RESET);
+                printf("Enter the number of elements in the array:\n");
+                scanf("%d", &n);
+
+                printf("Enter the elements of the array:\n");
+                for (i = 0; i < n; i++)
+                {
+                    scanf("%d", &arr[i]);
+                }
+
+                printf(RED "Array before sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                for (i = 0; i < n - 1; i++)
+                {
+                    for (j = 0; j < n - i - 1; j++)
+                    {
+                        if (arr[j] > arr[j + 1])
+                        {
+                            temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+
+                printf(GREEN "Array after sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                break;
+
+            case 2:
+                printf("Selection sort:-\n");
+                printf("Enter the number of elements in the array:\n");
+                scanf("%d", &n);
+
+                printf("Enter the elements of the array:\n");
+                for (i = 0; i < n; i++)
+                {
+                    scanf("%d", &arr[i]);
+                }
+
+                printf(RED "Array before sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                for (i = 0; i < n - 1; i++)
+                {
+                    min = i;
+
+                    for (j = i + 1; j < n; j++)
+                    {
+                        if (arr[j] < arr[min])
+                        {
+                            min = j;
+                        }
+                    }
+                    if (min != i)
+                    {
+                        temp = arr[i];
+                        arr[i] = arr[min];
+                        arr[min] = temp;
+                    }
+                }
+
+                printf(GREEN "Array after sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                break;
+
+            case 3:
+                printf("Insertion sort:-\n");
+                printf("Enter the number of elements in the array:\n");
+                scanf("%d", &n);
+                printf("Enter the elements in the array :");
+                for (i = 0; i < n; i++)
+                {
+                    scanf("%d", &arr[i]);
+                }
+
+                printf(RED "Array before sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                for (i = 1; i < n; i++)
+                {
+                    temp = arr[i];
+                    j = i - 1;
+                    while (j >= 0 && arr[j] > temp)
+                    {
+                        arr[j + 1] = arr[j];
+                        j--;
+                    }
+
+                    arr[j + 1] = temp;
+                }
+
+                printf(GREEN "Array after sorting:\n" RESET);
+                for (i = 0; i < n; i++)
+                {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+            }
+        }
+    } while (x != 3);
+}
+int main()
+{
+    char choice;
+    printf("^.^ > WELL 'HELLO' THERE, WELCOME TO THE PROGRAM! < ^.^\n");
+    printf("Do you want to know what this program does?\n");
+    printf("If this makes you curious, press >> Y\n");
+    printf("If not, press >> N\n");
+    printf("Enter your choice: ");
+    scanf(" %c", &choice);
+
+    if (choice == 'y' || choice == 'Y')
+    {
+        printf(YELLOW "\nThis is a menu-driven program in C.\n" RESET);
+        printf("-------------------------------------\n");
+        printf("It allows the user to perform various operations on an array,\n" RESET);
+        printf("Such as serching and sorting .\n");
+        printf("------------------------------\n");
+        printf("Searching is the process of finding an element in a dataset.\n");
+        printf(GREEN "\n1]Linear Search.\n" RESET);
+        printf("\nChecks each element one by one.\nSimple but slow for large datasets.\nWorks on both sorted and unsorted data.\n");
+        printf(GREEN "\n2]Binary Search.\n" RESET);
+        printf("\nWorks on sorted data only.\nRepeatedly divides the dataset in half to find the target\nFaster than linear search for large datasets.\n");
+        printf("\n===============================================================\n");
+        printf("\nSorting arranges elements in ascending or descending order,\nimproving search efficiency and data organization..\n");
+        printf(BLUE "\n1]Bubble sort.\n" RESET);
+        printf("\nRepeatedly swaps adjacent elements if they are in the wrong order.\nSimple but inefficient for large datasets.\n");
+        printf(BLUE "\n2]Selection Sort.\n" RESET);
+        printf("\nFinds the smallest element and moves it to the correct position.\nUses less swapping but is still slow.\n");
+        printf(BLUE "\n3]Insertion Sort\n" RESET);
+        printf("\nInserts each element into its correct position.\nEfficient for nearly sorted data.\n");
+        hat();
+    }
+    else if (choice == 'n' || choice == 'N')
+    {
+        hat();
+    }
+    else
+    {
+        printf("Invalid input!\n");
+    }
+    return 0;
+}
